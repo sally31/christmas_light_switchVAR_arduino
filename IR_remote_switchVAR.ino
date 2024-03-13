@@ -27,7 +27,10 @@ decode_results results;
 #define orange 10
 #define green 9
 #define clear 8
-bool flashlightActive = false;
+//bool flashlightActive = false;
+uint32_t g_currentButton = 0;
+uint32_t g_newButton = 0;
+
 
 void setup()
 {
@@ -49,60 +52,59 @@ void loop()
   // If an IR signal is received
   if(irrecv.decode(&results))
   {
+    g_newButton = results.value;
+
+    //irrecv.resume();
+  }
+
+  
+  if(g_currentButton != g_newButton)
+  {
+
+    g_currentButton = g_newButton;
+    
     // Execute different actions based on the received IR code
-    switch(results.value)
+    switch(g_currentButton)
     {
       //if botton 1 is pressed
-      Serial.println("1");
+      
       case BUTTON_1:
-        if(!flashlightActive)
         {
-          flashlightActive = true;
           illumiPattern1();
         }
         break;
 
       //if botton 2 is pressed
       case BUTTON_2:
-        if(!flashlightActive)
         {
-          flashlightActive = true;
           illumiPattern2();
         }
         break;
 
       //if botton 3 is pressed
       case BUTTON_3:
-        if(!flashlightActive)
         {
-          flashlightActive = true;
           illumiPattern3();
         }
         break;
 
       //if botton 4 is pressed
       case BUTTON_4:
-        if(!flashlightActive)
         {
-          flashlightActive = true;
           illumiPattern4();
         }
         break;
 
       //if botton 5 is pressed
       case BUTTON_5:
-        if(!flashlightActive)
         {
-          flashlightActive = true;
           illumiPattern5();
         }
         break;
 
       //if botton 6 is pressed
       case BUTTON_6:
-        if(!flashlightActive)
         {
-          flashlightActive = true;
           illumiPattern6();
         }
         break;
@@ -136,7 +138,6 @@ void loop()
       case BUTTON_ok:
         Serial.println("key ok");
         stopFlashlight();
-        //irrecv.resume();
         break;
       
       case BUTTON_up:
@@ -155,20 +156,14 @@ void loop()
         Serial.println("key LEFT");
         break;
 
-
-    Serial.println(results.value, HEX);
-    Serial.println(results.value);
-    // Resume IR reception
-    //irrecv.resume();
     }
-    irrecv.resume();  
   }
 }
 
 // different Flashlight pattern 1-6
 void illumiPattern1()
 {
-  while (flashlightActive)
+  while (g_currentButton == g_newButton)
   {
     digitalWrite(yellow, HIGH);
     digitalWrite(blue, HIGH);
@@ -188,11 +183,7 @@ void illumiPattern1()
     // If a different IR code is received
     if(irrecv.decode(&results))
     {
-      if(BUTTON_1 != results.value)
-      {
-        //stop the pattarn1
-        flashlightActive = false;
-      }
+      g_newButton = results.value;
       irrecv.resume();
     }
   }
@@ -200,7 +191,7 @@ void illumiPattern1()
 
 void illumiPattern2()
 {
-  while (flashlightActive)
+  while (g_currentButton == g_newButton)
   {
     digitalWrite(yellow, HIGH);
     digitalWrite(blue, HIGH);
@@ -211,11 +202,7 @@ void illumiPattern2()
 
     if(irrecv.decode(&results))
     {
-      if(BUTTON_2 != results.value)
-      {
-        //stop the pattarn1
-        flashlightActive = false;
-      }
+      g_newButton = results.value;
       irrecv.resume();
     }
   }
@@ -223,7 +210,7 @@ void illumiPattern2()
 
 void illumiPattern3()
 {
-  while (flashlightActive)
+  while (g_currentButton == g_newButton)
   {
     digitalWrite(yellow, HIGH);
     delay(100);
@@ -249,10 +236,7 @@ void illumiPattern3()
 
     if(irrecv.decode(&results))
     {
-      if(BUTTON_3 != results.value)
-      {
-        flashlightActive = false;
-      }
+      g_newButton = results.value;
       irrecv.resume();
     }
   }
@@ -260,7 +244,7 @@ void illumiPattern3()
 
 void illumiPattern4()
 {
-  while (flashlightActive)
+  while (g_currentButton == g_newButton)
   {
     digitalWrite(yellow, HIGH);
     digitalWrite(red, HIGH);
@@ -279,10 +263,7 @@ void illumiPattern4()
 
     if(irrecv.decode(&results))
     {
-      if(BUTTON_4 != results.value)
-      {
-        flashlightActive = false;
-      }
+      g_newButton = results.value;
       irrecv.resume();
     }
   }
@@ -290,7 +271,7 @@ void illumiPattern4()
 
 void illumiPattern5()
 {
-  while (flashlightActive)
+  while (g_currentButton == g_newButton)
   {
     digitalWrite(yellow, HIGH);
     delay(100);
@@ -329,10 +310,7 @@ void illumiPattern5()
 
     if(irrecv.decode(&results))
     {
-      if(BUTTON_5 != results.value)
-      {
-        flashlightActive = false;
-      }
+      g_newButton = results.value;
       irrecv.resume();
     }
   }
@@ -340,7 +318,7 @@ void illumiPattern5()
 
 void illumiPattern6()
 {
-  while (flashlightActive)
+  while (g_currentButton == g_newButton)
   {
     digitalWrite(yellow, HIGH);
     delay(100);
@@ -370,10 +348,7 @@ void illumiPattern6()
 
     if(irrecv.decode(&results))
     {
-      if(BUTTON_6 != results.value)
-      {
-        flashlightActive = false;
-      }
+      g_newButton = results.value;
       irrecv.resume();
     }
   }
@@ -384,7 +359,6 @@ void illumiPattern6()
 // Function to stop the flashlight
 void stopFlashlight()
 {
-  flashlightActive = false;
   digitalWrite(yellow, LOW);
   digitalWrite(blue, LOW);
   digitalWrite(red, LOW);
@@ -392,3 +366,4 @@ void stopFlashlight()
   digitalWrite(green, LOW);
   digitalWrite(clear, LOW);
 }
+
