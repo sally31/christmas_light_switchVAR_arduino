@@ -17,6 +17,13 @@
 #define BUTTON_down 16730805
 #define BUTTON_right 16734885
 #define BUTTON_left 16716015
+#define state0 0
+#define state1 1
+#define state2 2
+#define state3 3
+#define state4 4
+uint8_t state = 0;
+uint16_t counter = 0;
 
 const int RECV_PIN = 7;
 IRrecv irrecv(RECV_PIN);
@@ -27,7 +34,7 @@ decode_results results;
 #define orange 10
 #define green 9
 #define clear 8
-//bool flashlightActive = false;
+bool flashlightActive = false;
 uint32_t g_currentButton = 0;
 uint32_t g_newButton = 0;
 
@@ -55,6 +62,13 @@ void loop()
     g_newButton = results.value;
 
     //irrecv.resume();
+    Serial.println(g_newButton);
+    Serial.println("0");
+    Serial.println(g_currentButton);
+    Serial.println("state");
+    Serial.println(state);
+    Serial.println("couner");
+    Serial.println(counter);
   }
 
   
@@ -70,6 +84,7 @@ void loop()
       
       case BUTTON_1:
         {
+          Serial.println("00");
           illumiPattern1();
         }
         break;
@@ -163,28 +178,68 @@ void loop()
 // different Flashlight pattern 1-6
 void illumiPattern1()
 {
-  while (g_currentButton == g_newButton)
+  Serial.println("1");
+  switch(state)
   {
-    digitalWrite(yellow, HIGH);
-    digitalWrite(blue, HIGH);
-    digitalWrite(red, HIGH);
-    digitalWrite(orange, HIGH);
-    digitalWrite(green, HIGH);
-    digitalWrite(clear, HIGH);
-    delay(1000);
-    digitalWrite(yellow, LOW);
-    digitalWrite(blue, LOW);
-    digitalWrite(red, LOW);
-    digitalWrite(orange, LOW);
-    digitalWrite(green, LOW);
-    digitalWrite(clear, LOW);
-    delay(1000);
-    
-    // If a different IR code is received
-    if(irrecv.decode(&results))
+    Serial.println("2");
+    case state0:
     {
-      g_newButton = results.value;
-      irrecv.resume();
+      Serial.println("3");
+      counter = 0;
+      state ++;
+      Serial.println(state);
+      break;
+    }
+
+    case state1:
+    {
+      Serial.println("4");
+      counter ++;
+      Serial.println(counter);
+      if(counter >= 500)
+      {
+        counter = 0;
+        state ++;
+      }
+      
+      Serial.println(state);
+      break;
+    }
+
+    case state2:
+    {
+      digitalWrite(yellow, HIGH);
+      digitalWrite(blue, HIGH);
+      digitalWrite(red, HIGH);
+      digitalWrite(orange, HIGH);
+      digitalWrite(green, HIGH);
+      digitalWrite(clear, HIGH);
+      counter = 0;
+      state ++;
+      break;
+    }
+
+    case state3:
+    {
+      counter ++;
+      if(counter >= 500)
+      {
+        counter = 0;
+        state ++;
+      }
+      break;
+    }
+
+    case state4:
+    {
+      digitalWrite(yellow, LOW);
+      digitalWrite(blue, LOW);
+      digitalWrite(red, LOW);
+      digitalWrite(orange, LOW);
+      digitalWrite(green, LOW);
+      digitalWrite(clear, LOW);
+      state = 1;
+      break;
     }
   }
 }
@@ -366,4 +421,3 @@ void stopFlashlight()
   digitalWrite(green, LOW);
   digitalWrite(clear, LOW);
 }
-
