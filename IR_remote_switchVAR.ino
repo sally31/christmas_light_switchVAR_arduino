@@ -59,150 +59,37 @@ void loop()
   // If an IR signal is received
   if(irrecv.decode(&results))
   {
-    g_newButton = results.value;
+    illumiPattern1();
 
     //irrecv.resume();
-    Serial.println(g_newButton);
-    Serial.println("0");
-    Serial.println(g_currentButton);
     Serial.println("state");
     Serial.println(state);
     Serial.println("couner");
     Serial.println(counter);
   }
 
-  
-  if(g_currentButton != g_newButton)
-  {
-
-    g_currentButton = g_newButton;
-    
-    // Execute different actions based on the received IR code
-    switch(g_currentButton)
-    {
-      //if botton 1 is pressed
-      
-      case BUTTON_1:
-        {
-          Serial.println("00");
-          illumiPattern1();
-        }
-        break;
-
-      //if botton 2 is pressed
-      case BUTTON_2:
-        {
-          illumiPattern2();
-        }
-        break;
-
-      //if botton 3 is pressed
-      case BUTTON_3:
-        {
-          illumiPattern3();
-        }
-        break;
-
-      //if botton 4 is pressed
-      case BUTTON_4:
-        {
-          illumiPattern4();
-        }
-        break;
-
-      //if botton 5 is pressed
-      case BUTTON_5:
-        {
-          illumiPattern5();
-        }
-        break;
-
-      //if botton 6 is pressed
-      case BUTTON_6:
-        {
-          illumiPattern6();
-        }
-        break;
-
-      case BUTTON_7:
-        Serial.println("key7");
-        break;
-      
-      case BUTTON_8:
-        Serial.println("key8");
-        break;
-
-      case BUTTON_9:
-        Serial.println("key9");
-        break;
-      
-      case BUTTON_0:
-        Serial.println("key0");
-        break;
-      
-      case BUTTON_ast:
-        Serial.println("key*");
-        break;
-      
-      case BUTTON_hash:
-        Serial.println("key#");
-        break;
-      
-
-      //if botton ok is pressed
-      case BUTTON_ok:
-        Serial.println("key ok");
-        stopFlashlight();
-        break;
-      
-      case BUTTON_up:
-        Serial.println("key UP");
-        break;
-
-      case BUTTON_right:
-        Serial.println("key RIGHT");
-        break;
-
-      case BUTTON_down:
-        Serial.println("key DOWN");
-        break;
-
-      case BUTTON_left:
-        Serial.println("key LEFT");
-        break;
-
-    }
-  }
 }
 
 // different Flashlight pattern 1-6
 void illumiPattern1()
 {
-  Serial.println("1");
   switch(state)
   {
-    Serial.println("2");
     case state0:
     {
-      Serial.println("3");
       counter = 0;
       state ++;
-      Serial.println(state);
       break;
     }
 
     case state1:
     {
-      Serial.println("4");
       counter ++;
-      Serial.println(counter);
-      if(counter >= 500)
+      if(counter >= 50)
       {
         counter = 0;
         state ++;
       }
-      
-      Serial.println(state);
       break;
     }
 
@@ -222,7 +109,7 @@ void illumiPattern1()
     case state3:
     {
       counter ++;
-      if(counter >= 500)
+      if(counter >= 50)
       {
         counter = 0;
         state ++;
