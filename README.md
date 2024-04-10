@@ -4,7 +4,11 @@
 
 
 
-https://github.com/sally31/christmas_light_switchVAR_arduino/assets/111925455/cf90c9e2-2956-46bc-951e-0648acfa80ea
+
+
+https://github.com/sally31/christmas_light_switchVAR_arduino/assets/111925455/d1b8980a-d8af-43bc-823b-ba6530ca1fef
+
+
 
 
 
