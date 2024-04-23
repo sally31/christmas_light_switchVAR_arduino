@@ -5,18 +5,18 @@
 #define state3 3
 #define state4 4
 
-uint8_t stateP1 = 0;
-uint8_t stateP2 = 0;
-uint8_t stateP3 = 0;
-uint8_t stateP4 = 0;
-uint8_t stateP5 = 0;
-uint8_t stateP6= 0;
-uint16_t counterP1 = 0;
-uint16_t counterP2 = 0;
-uint16_t counterP3 = 0;
-uint16_t counterP4 = 0;
-uint16_t counterP5 = 0;
-uint16_t counterP6 = 0;
+//uint8_t stateP1 = 0;
+//uint8_t stateP2 = 0;
+//uint8_t stateP3 = 0;
+//uint8_t stateP4 = 0;
+//uint8_t stateP5 = 0;
+//uint8_t stateP6= 0;
+//uint16_t counterP1 = 0;
+//uint16_t counterP2 = 0;
+//uint16_t counterP3 = 0;
+//uint16_t counterP4 = 0;
+//uint16_t counterP5 = 0;
+//uint16_t counterP6 = 0;
 
 #define yellow 6
 #define blue 12
@@ -58,6 +58,8 @@ void loop()
 // different Flashlight pattern 1-6
 void illumiPattern1()
 {
+  static uint8_t stateP1 = 0;
+  static uint16_t counterP1 = 0;
   switch(stateP1)
   {
     case state0:
@@ -109,6 +111,8 @@ void illumiPattern1()
 
 void illumiPattern2()
 {
+  static uint8_t stateP2 = 0;
+  static uint16_t counterP2 = 0;
   switch(stateP2)
   {
     case state0:
@@ -159,6 +163,8 @@ void illumiPattern2()
 
 void illumiPattern3()
 {
+  static uint8_t stateP3 = 0;
+  static uint16_t counterP3 = 0;
   switch(stateP3)
   {
     case state0:
@@ -210,6 +216,8 @@ void illumiPattern3()
 
 void illumiPattern4()
 {
+  static uint8_t stateP4 = 0;
+  static uint16_t counterP4 = 0;
   switch(stateP4)
   {
     case state0:
@@ -261,6 +269,8 @@ void illumiPattern4()
 
 void illumiPattern5()
 {
+  static uint8_t stateP5 = 0;
+  static uint16_t counterP5 = 0;
   switch(stateP5)
   {
     case state0:
@@ -312,6 +322,8 @@ void illumiPattern5()
 
 void illumiPattern6()
 {
+  static uint8_t stateP6= 0;
+  static uint16_t counterP6 = 0;
   switch(stateP6)
   {
     case state0:
