@@ -60,6 +60,8 @@ void illumiPattern1()
 {
   static uint8_t stateP1 = 0;
   static uint16_t counterP1 = 0;
+  static int count3 = 3;
+  static int count = 0;
   switch(stateP1)
   {
     case state0:
@@ -104,8 +106,17 @@ void illumiPattern1()
       digitalWrite(yellow, LOW);
 
       stateP1 = 1;
+      count ++;
       break;
+      
     }
+  }
+  //Serial.println(count);
+  if (count == count3 && counterP1 == 50)
+  {
+    stateP1 = 1;
+    counterP1 = 0;
+    count = 0;
   }
 }
 
